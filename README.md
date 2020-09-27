@@ -4,4 +4,5 @@ general quiz game base on windows application
 This is windows based quiz game application.
 
 
-<a href="https://www.technical-education.com"> Technical Education</a> , This is my websites, plz visit it , and share your feedback.., Thank you
+<a href="https://usemynotes.com/" rel="dofollow">Use My Notes</a> is an Education Website for providing all Diploma course material. Use My Notes is free of cost-based website no any charges it's fully freely.
+Thank you
