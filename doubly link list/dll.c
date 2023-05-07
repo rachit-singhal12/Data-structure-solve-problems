@@ -100,6 +100,12 @@ void deletebegin()
     {
         printf("Underflow\n");
     }
+    else if(head->next == NULL)
+    {
+        struct Node *temp = head;
+        head = NULL;
+        free(temp);
+    }
     else
     {
         curr=curr->next;
@@ -149,52 +155,57 @@ void deletelast()
     curr->next = NULL;
     free(temp);
 }
-
-
-
 int main()
 {
-    int n;
-    printf("Enter the value : ");
-    scanf("%d",&n);
-
-    addbegin(n);
-    addbegin(n);
-    addbegin(n);
-    addbegin(n);
-    addbegin(n);
-
-    display();
-
-    addlast(20);
-    addlast(20);
-    addlast(20);
-    addlast(20);
-    addlast(20);
-
-    printf("\n");
-    display();
-
-    deletebegin();
-    deletebegin();
-    printf("\n");
-    display();
-
-
-    deletelast();
-    deletelast();
-    deletelast();
-    printf("\n");
-    display();
-    printf("\n");
-    addmid(30);
-    addmid(30);
-    addmid(30);
-    printf("\n");
-    display();
-    
-    deletemid();
-    deletemid();
-    display();
+    int ch,n;
+    while(1)
+    {
+        printf("Press 1 for insert at begin ...\n ");
+        printf("Press 2 for insert at mid ...\n ");
+        printf("Press 3 for insert at last ...\n ");
+        printf("Press 4 for delete from begin ...\n ");
+        printf("Press 5 for delete from mid ...\n ");
+        printf("Press 6 for delete from last ...\n ");
+        printf("Press 7 for display list... \n ");
+        printf("Press 8 for exit ... \n ");
+        printf("Enter your choice : ");
+        scanf("%d",&ch);
+        switch (ch)
+        {
+        case 1:
+            printf("Enter the value : ");
+            scanf("%d",&n);
+            addbegin(n);
+            break;
+        case 2:
+            printf("Enter the value : ");
+            scanf("%d",&n);
+            addmid(n);
+            break;
+        case 3:
+            printf("Enter the value : ");
+            scanf("%d",&n);
+            addlast(n);
+            break;
+        case 4:
+            deletebegin();
+            break;
+        case 5:
+            deletemid();
+            break;
+        case 6:
+            deletelast();
+            break;
+        case 7:
+            display();
+            break;
+        case 8:
+            exit(1);
+            break;
+        default:
+            printf("Invalid choice\n");
+            break;
+        }
+    }
     return 0;
 }
