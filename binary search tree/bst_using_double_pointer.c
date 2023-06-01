@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 struct node
 {
@@ -7,7 +8,66 @@ struct node
     int data;
     struct node *right;
 };
+
+void insert(struct node **,int);
+void inorder(struct node *);
+void preorder(struct node *);
+void postorders(struct node *);
+void deletion(struct node **,int);
+struct node* minValueNode(struct node *);
+
 struct node **root = NULL;
+
+int main()
+{
+    struct node *root=NULL;
+    int ch,val,count=0;
+    char c;
+    do{
+        printf("Press 1 for insertion...\n");
+        printf("Press 2 for inorder traversal...\n");
+        printf("Press 3 for preorder traversal...\n");
+        printf("Press 4 for postorder traversal...\n");
+        printf("Press 5 for delete a node in tree...\n");
+        printf("Press 6 for exit...\n");
+        printf("Enter your choice : ");
+        scanf("%d",&ch);
+        switch (ch)
+        {
+        case 1:
+            printf("enter the value : ");
+            scanf("%d",&val);
+            insert(&root,val);
+            break;
+        case 2:
+           inorder(root);
+            printf("\n");
+            break;
+        case 3:
+            preorder(root);
+            printf("\n");
+            break;
+        case 4:
+            postorders(root);
+            printf("\n");
+            break;
+        case 5:
+            printf("Enter the value to be deleted : ");
+            scanf("%d",&val);
+            deletion(&root,val);
+            break;
+        case 6:
+            exit(1);
+            break;
+        default:
+            printf("invalid choice...\n");
+            break;
+        }
+        printf("Press y for continue : ");
+        scanf(" %c",&c);
+    }while(toupper(c)=='Y');
+    return 0;
+}
 
 void insert(struct node **curr,int data)
 {
@@ -55,58 +115,38 @@ void postorders(struct node *curr)
     }
 }
 
-void count(struct node *curr,int *c)
-{
-    if(curr!=NULL)
-    {
-        *c=*c+1;
-        count(curr->left,c);
-        count(curr->right,c);
+struct node* minValueNode(struct node* current) {
+    while (current && current->left != NULL) {
+        current = current->left;
     }
+
+    return current;
 }
 
-void sum(struct node *curr,int *m)
+void deletion(struct node **curr,int val)
 {
-    if(curr!=NULL)
-    {
-        *m=*m+curr->data;
-        sum(curr->left,m);
-        sum(curr->right,m);
+    if((*curr)==NULL)return;
+    else if((*curr)->data>val)
+    deletion(&((*curr)->left),val);
+    else if((*curr)->data<val)
+    deletion(&((*curr)->right),val);
+    else {
+        if((*curr)->left == NULL)
+        {
+            struct node *temp = *curr;
+            *curr = (*curr)->right;
+            free(temp);
+        }
+        else if((*curr)->right == NULL)
+        {
+            struct node *temp = *curr;
+            *curr = (*curr)->left;
+            free(temp);
+        }
+        else{
+            struct node *temp = minValueNode((*curr)->right);
+            (*curr)->data = temp->data;
+            deletion(&((*curr)->right),temp->data);
+        }
     }
-}
-
-void deletion(struct node **curr,int n)
-{
-    if((*curr)->left==NULL && (*curr)->right==NULL && (*curr)->data==n)
-    {
-        free(curr);
-    }
-    else if((*curr)->data>n)
-    deletion(&((*curr)->left),n);
-    else
-    deletion(&((*curr)->right),n);
-}
-int main()
-{
-    int c=0,s=0;
-    struct node *root = NULL;
-    insert(&root,100);
-    insert(&root,20);
-    insert(&root,200);
-    insert(&root,10);
-    insert(&root,30);
-    insert(&root,150);
-    insert(&root,300);
-    inorder(root);
-    printf("\n");
-    preorder(root);
-    printf("\n");
-    postorders(root);
-    count(root,&c);
-    printf("Total node present are %d \n",c);
-    sum(root,&s);
-    printf("Sum of element are %d\n",s);
-    deletion(&root,10);
-    inorder(root);
-    return 0;
 }
