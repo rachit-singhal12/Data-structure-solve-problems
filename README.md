@@ -1,2 +1,2 @@
 # Data-structure-solve-problems
-data structure codes
+This repository will contain the menu driven of all data structure's and some problem's solutions.
